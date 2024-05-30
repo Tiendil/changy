@@ -1,4 +1,5 @@
 import pydantic_settings
+from pathlib import Path
 
 
 class BaseSettings(pydantic_settings.BaseSettings):
@@ -12,12 +13,13 @@ class BaseSettings(pydantic_settings.BaseSettings):
 
 
 class Settings(BaseSettings):
-    changelog_name = "CHANGELOG.md"
-    changelog_sources_dir = ".changes"
+    changelog_name: str = "CHANGELOG.md"
+    changelog_sources_dir: str = ".changes"
+    changelog_header: str = "header.md"
 
-    changes_file_template = ".template.md"
-    unreleased_changes_file = "unreleased.md"
-    next_release_changes_file = "next_release.md"
+    changes_file_template: str = ".template.md"
+    unreleased_changes_file: str = "unreleased.md"
+    next_release_changes_file: str = "next_release.md"
 
     model_config = pydantic_settings.SettingsConfigDict(env_prefix="CHANGY_")
 
