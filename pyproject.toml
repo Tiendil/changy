@@ -1,0 +1,86 @@
+[tool.poetry]
+name = "changy"
+version = "0.1.0"
+description = "Simplest changelog manager, oriented to human editing, not to special message formatting in commits and tags.."
+readme = "README.md"
+repository = "https://github.com/Tiendil/changy"
+authors = ["Aliaksei Yaletski (Tiendil) <a.eletsky@gmail.com>"]
+license = "BSD-3-Clause"
+keywords = ["changelog", "release-notes", "release-automation", "release-management", "changelog-generator", "changelog-formatter"]
+classifiers = [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+pydantic = "2.5.*"
+pydantic-settings = "2.1.*"
+
+jinja2 = "3.1.*"
+
+typer = "0.9.*"
+
+[tool.poetry.dev-dependencies]
+
+pytest = "7.4.*"
+pytest-asyncio = "0.21.*"
+pytest-mock = "3.11.*"
+
+isort = "5.13.*"
+black = "24.2.*"
+
+flake8 = "7.0.*"
+flake8-docstrings = "1.7.*"
+flake8-functions = "0.0.*"
+flake8-annotations-complexity = "0.0.*"
+flake8-cognitive-complexity = "0.1.*"
+flake8-pytest = "1.4.*"
+flake8-bandit = "4.1.*"
+flake8-absolute-import = "1.0.*"
+flake8-print = "5.0.*"
+flake8-pyproject = "1.2.*"
+flake8-eradicate = "1.5.*"
+autoflake = "2.3.*"
+
+mypy = "1.8.*"
+
+[tool.poetry.scripts]
+changy = "changy.cli.__main__:app"
+
+[tool.isort]
+profile = "black"
+line_length = 119
+
+[tool.black]
+line-length = 119
+
+[tool.autoflake]
+in_place = true
+remove_all_unused_imports = true
+remove_unused_variables = true
+recursive = true
+
+[tool.flake8]
+ignore = [
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D107",
+    "D200",
+    "D400",
+    "S101",
+    "S311",
+    "W503",
+    "CFQ004",
+    "E203",  # blake formats [x:y] with spaves
+]
+max-line-length = 119

@@ -1,0 +1,11 @@
+services:
+
+  changy:
+
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+
+    volumes:
+      - ${PWD}/:/repository
+      - ${PWD}/.env:/repository/.env
