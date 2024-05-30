@@ -2,6 +2,6 @@
 
 set -e
 
-echo "run backend tests"
+echo "run tests"
 
-./bin/backend-utils.sh poetry run pytest ffun
+./bin/utils.sh poetry run pytest changy
