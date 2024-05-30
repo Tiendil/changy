@@ -1,5 +1,4 @@
 import pydantic_settings
-from pathlib import Path
 
 
 class BaseSettings(pydantic_settings.BaseSettings):

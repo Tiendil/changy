@@ -1,9 +1,6 @@
-from changy.cli.application import app  # noqa: F401
-from changy import logic
 import typer
 
-from changy.cli import version
-
+from changy import logic
 
 app = typer.Typer()
 
