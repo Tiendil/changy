@@ -14,10 +14,10 @@ class BaseSettings(pydantic_settings.BaseSettings):
 
 class Settings(BaseSettings):
     changelog_name: str = "CHANGELOG.md"
-    changelog_sources_dir: str = ".changes"
+    changelog_sources_dir: str = "changes"
     changelog_header: str = "header.md"
 
-    changes_file_template: str = ".template.md"
+    changes_file_template: str = "changes_template.md"
     unreleased_changes_file: str = "unreleased.md"
     next_release_changes_file: str = "next_release.md"
 
