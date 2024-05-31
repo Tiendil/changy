@@ -5,8 +5,8 @@ from pathlib import Path
 import pydantic
 
 from changy import constants as c
-from changy.settings import settings
 from changy import errors
+from changy.settings import settings
 
 VERSION_DATETIME_FORMAT = "%Y-%m-%dT%H-%M-%S"
 CHANGES_FILE_REGEX = re.compile(r"(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2})_(.*)\.md")

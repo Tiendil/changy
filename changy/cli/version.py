@@ -1,6 +1,6 @@
 import typer
-from changy import utils
-from changy import logic
+
+from changy import logic, utils
 
 app = typer.Typer()
 

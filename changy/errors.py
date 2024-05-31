@@ -33,12 +33,12 @@ class AlreadyInitialized(ChangyError):
 
 
 class NoApprovedChanges(ChangyError):
-    message = "No approved changes found ({file}). Ensure you edited unreleased changes file and called `changy unrelease approve`."
+    message = "No approved changes found ({file}). Ensure you edited unreleased changes file and called `changy unrelease approve`."  # noqa: E501
 
 
 class NoUnreleasedChanges(ChangyError):
-    message = "No unreleased changes found ({file}). Ensure you finished updating the changelog and called `changy version create`."
+    message = "No unreleased changes found ({file}). Ensure you finished updating the changelog and called `changy version create`."  # noqa: E501
 
 
 class ApprovedChangesFileExists(ChangyError):
-    message = "Approved changes file ({file}) should not exist at this point. Ensure you finished version generation by calling `changy version create`."
+    message = "Approved changes file ({file}) should not exist at this point. Ensure you finished version generation by calling `changy version create`."  # noqa: E501

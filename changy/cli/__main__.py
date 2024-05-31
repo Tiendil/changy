@@ -1,7 +1,6 @@
-from changy import logic
+from changy import logic, utils
 from changy.cli import changelog, unreleased, version
 from changy.cli.application import app  # noqa: F401
-from changy import utils
 
 app.add_typer(version.app, name="version")
 app.add_typer(unreleased.app, name="unreleased")
