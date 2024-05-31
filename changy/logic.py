@@ -50,9 +50,9 @@ def load_changes() -> list[Changes]:
         time, version = match.groups()
         text = file.read_text()
 
-        changes = Changes(time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT),
-                          file=file,
-                          version=version, text=text)
+        changes = Changes(
+            time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT), file=file, version=version, text=text
+        )
 
         changes_list.append(changes)
 
