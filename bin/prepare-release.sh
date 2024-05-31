@@ -17,7 +17,7 @@ poetry install
 
 echo "Update change log"
 
-export NEXT_VERSION_CHANGES_FILE=${poetry run changy version create "$NEXT_VERSION"}
+export NEXT_VERSION_CHANGES_FILE=$(poetry run changy version create $NEXT_VERSION)
 
 echo "Generate changelog"
 

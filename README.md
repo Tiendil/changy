@@ -69,6 +69,7 @@ For detailed example, see ./bin/prepate-release.sh
 
 ```bash
 # Creates version file with approved changes and creates new unreleased file
+# Changy will fail if there are no approved changes => you will not forget to approve changes
 changy version create 1.2.3
 
 # generates changelog
