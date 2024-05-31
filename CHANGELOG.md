@@ -27,6 +27,14 @@ No changes.
 
 No changes.
 
+## 0.3.0 on 2024-05-31
+
+- Added checking for duplicated versions.
+- Added custom exceptions for errors.
+- Added meaningful error messages.
+- Improved README.md.
+- Better message for release commit.
+
 ## 0.1.2 on 2024-05-31
 
 - Added Changy steps to prepare-release.sh

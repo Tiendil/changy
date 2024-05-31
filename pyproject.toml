@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "changy"
-version = "0.2.0"
+version = "0.3.0"
 description = "Simplest changelog manager, oriented to human editing, not to special message formatting in commits and tags.."
 readme = "README.md"
 repository = "https://github.com/Tiendil/changy"
