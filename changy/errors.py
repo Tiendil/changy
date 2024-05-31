@@ -46,3 +46,7 @@ class ApprovedChangesFileExists(ChangyError):
 
 class VersionAlreadyExists(ChangyError):
     message = "Version {version} already exists. See {file}"
+
+
+class VersionDoesNotExist(ChangyError):
+    message = "Version {version} does not exist."

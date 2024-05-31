@@ -112,6 +112,18 @@ def create_version(version: str) -> Path:
     return next_version_file
 
 
+def show_version_changes(version: str) -> str:
+    config_dir_must_exist()
+
+    changes = load_changes()
+
+    for change in changes:
+        if change.version == version:
+            return change.text.strip()
+
+    raise errors.VersionDoesNotExist(version=version)
+
+
 def create_changelog() -> None:
     config_dir_must_exist()
 
@@ -129,10 +141,11 @@ def create_changelog() -> None:
 
     # add unreleased changes
     text = unreleased_changes_file.read_text()
-    unreleased_text = text.format(version_header="Unreleased")
+    unreleased_text = f"## Unreleased\n\n{text.strip()}"
     content.append(unreleased_text)
 
-    content.extend(change.text.format(version_header=change.version_header) for change in releases)
+    for change in releases:
+        content.append(f"## {change.version_header}\n\n{change.text.strip()}")
 
     content = [x.strip() for x in content]
 

@@ -44,10 +44,7 @@ Besides version files, there are some particular files:
 - `./changes/unreleased.md` — Contains changes not yet released.
 - `./changes/next_release.md` — Contains changes approved for the next release.
 
-You may edit `./changes/unreleased.md` any time you want before making an actual release. This file has no special syntax but allows substitution of some variables:
-
-- `{version_header}` — base header of version (version number + date).
-
+You may edit `./changes/unreleased.md` any time you want before making an actual release. The file has no special syntax.
 
 # Usage
 
