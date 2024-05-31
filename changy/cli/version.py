@@ -1,5 +1,6 @@
-import typer
 import sys
+
+import typer
 
 from changy import logic, utils
 
