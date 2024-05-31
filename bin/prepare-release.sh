@@ -17,7 +17,7 @@ poetry install
 
 echo "Update change log"
 
-export NEXT_VERSION_CHANGES_FILE=$(poetry run changy version create $NEXT_VERSION)
+poetry run changy version create $NEXT_VERSION
 
 echo "Generate changelog"
 
@@ -30,10 +30,10 @@ poetry build
 echo "Commit changes"
 
 git add -A
-git commit --file=$NEXT_VERSION_CHANGES_FILE
-git push
+git commit -m "Release $NEXT_VERSION" -m "$(poetry run changy version show $NEXT_VERSION)"
+# git push
 
-echo "Create tag"
+# echo "Create tag"
 
-git tag $NEXT_VERSION_TAG
-git push origin $NEXT_VERSION_TAG
+# git tag $NEXT_VERSION_TAG
+# git push origin $NEXT_VERSION_TAG
