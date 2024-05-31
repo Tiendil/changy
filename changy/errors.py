@@ -42,3 +42,7 @@ class NoUnreleasedChanges(ChangyError):
 
 class ApprovedChangesFileExists(ChangyError):
     message = "Approved changes file ({file}) should not exist at this point. Ensure you finished version generation by calling `changy version create`."  # noqa: E501
+
+
+class VersionAlreadyExists(ChangyError):
+    message = "Version {version} already exists. See {file}"

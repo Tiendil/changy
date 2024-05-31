@@ -26,6 +26,7 @@ class Changes(pydantic.BaseModel):
     time: datetime.datetime
     version: str
     text: str
+    file: Path
 
     @property
     def version_header(self) -> str:
@@ -35,6 +36,29 @@ class Changes(pydantic.BaseModel):
 def config_dir_must_exist():
     if not configs_dir.exists():
         raise errors.ChangesDirDoesNotExist(directory=configs_dir)
+
+
+def load_changes() -> list[Changes]:
+    changes_list = []
+
+    for file in configs_dir.iterdir():
+        match = CHANGES_FILE_REGEX.match(file.name)
+
+        if not match:
+            continue
+
+        time, version = match.groups()
+        text = file.read_text()
+
+        changes = Changes(
+            time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT), file=file, version=version, text=text
+        )
+
+        changes_list.append(changes)
+
+    changes_list.sort(key=lambda x: x.time, reverse=True)
+
+    return changes_list
 
 
 def init() -> None:
@@ -66,6 +90,12 @@ def approve_unreleased() -> None:
 def create_version(version: str) -> None:
     config_dir_must_exist()
 
+    changes = load_changes()
+
+    for change in changes:
+        if change.version == version:
+            raise errors.VersionAlreadyExists(file=change.file, version=version)
+
     time = datetime.datetime.now().strftime(VERSION_DATETIME_FORMAT)
 
     version_file_name = f"{time}_{version}.md"
@@ -91,22 +121,7 @@ def create_changelog() -> None:
 
     header = header_file.read_text()
 
-    releases = []
-
-    for file in configs_dir.iterdir():
-        match = CHANGES_FILE_REGEX.match(file.name)
-
-        if not match:
-            continue
-
-        time, version = match.groups()
-        text = file.read_text()
-
-        changes = Changes(time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT), version=version, text=text)
-
-        releases.append(changes)
-
-    releases.sort(key=lambda x: x.time, reverse=True)
+    releases = load_changes()
 
     content = [header]
 
