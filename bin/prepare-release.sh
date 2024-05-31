@@ -29,13 +29,11 @@ poetry build
 
 echo "Commit changes"
 
-echo `cat $NEXT_VERSION_CHANGES_FILE`
+git add -A
+git commit -m `cat $NEXT_VERSION_CHANGES_FILE`
+git push
 
-# git add -A
-# git commit -m `cat $NEXT_VERSION_CHANGES_FILE`
-# git push
+echo "Create tag"
 
-# echo "Create tag"
-
-# git tag $NEXT_VERSION_TAG
-# git push origin $NEXT_VERSION_TAG
+git tag $NEXT_VERSION_TAG
+git push origin $NEXT_VERSION_TAG
