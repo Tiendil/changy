@@ -19,6 +19,10 @@ echo "Update change log"
 
 poetry run changy version create "$NEXT_VERSION"
 
+echo "Generate changelog"
+
+poetry run changy changelog create
+
 echo "Building Python package"
 
 poetry build
