@@ -133,7 +133,7 @@ def create_changelog() -> None:
     content.append(unreleased_text)
 
     for change in releases:
-        content.append(f'## {change.version_header}\n\n{change.text.strip()}')
+        content.append(f"## {change.version_header}\n\n{change.text.strip()}")
 
     content = [x.strip() for x in content]
 
