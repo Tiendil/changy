@@ -11,6 +11,14 @@ echo "Bump backend version"
 export NEXT_VERSION=$(poetry version $BUMP_VERSION --short)
 export NEXT_VERSION_TAG="release-$NEXT_VERSION"
 
+echo "Install dependencies"
+
+poetry install
+
+echo "Update change log"
+
+poetry run changy version create "$NEXT_VERSION"
+
 echo "Building Python package"
 
 poetry build
