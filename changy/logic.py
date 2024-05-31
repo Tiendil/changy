@@ -26,6 +26,7 @@ class Changes(pydantic.BaseModel):
     time: datetime.datetime
     version: str
     text: str
+    file: Path
 
     @property
     def version_header(self) -> str:
@@ -38,7 +39,7 @@ def config_dir_must_exist():
 
 
 def load_changes() -> list[Changes]:
-    changes = []
+    changes_list = []
 
     for file in configs_dir.iterdir():
         match = CHANGES_FILE_REGEX.match(file.name)
@@ -49,13 +50,15 @@ def load_changes() -> list[Changes]:
         time, version = match.groups()
         text = file.read_text()
 
-        changes = Changes(time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT), version=version, text=text)
+        changes = Changes(time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT),
+                          file=file,
+                          version=version, text=text)
 
-        changes.append(changes)
+        changes_list.append(changes)
 
-    changes.sort(key=lambda x: x.time, reverse=True)
+    changes_list.sort(key=lambda x: x.time, reverse=True)
 
-    return changes
+    return changes_list
 
 
 def init() -> None:
@@ -91,7 +94,7 @@ def create_version(version: str) -> None:
 
     for change in changes:
         if change.version == version:
-            raise errors.VersionAlreadyExists(file=next_release_file)
+            raise errors.VersionAlreadyExists(file=change.file, version=version)
 
     time = datetime.datetime.now().strftime(VERSION_DATETIME_FORMAT)
 
