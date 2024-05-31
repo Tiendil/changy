@@ -34,7 +34,7 @@ class Changes(pydantic.BaseModel):
 
 def config_dir_must_exist():
     if not configs_dir.exists():
-        raise errors.ChangesDirDoesNotExist()
+        raise errors.ChangesDirDoesNotExist(directory=configs_dir)
 
 
 def init() -> None:
@@ -58,7 +58,7 @@ def approve_unreleased() -> None:
     config_dir_must_exist()
 
     if not unreleased_changes_file.exists():
-        errors.NoUnreleasedChanges()
+        errors.NoUnreleasedChanges(file=unreleased_changes_file)
 
     unreleased_changes_file.rename(next_release_file)
 
@@ -73,7 +73,7 @@ def create_version(version: str) -> None:
     next_version_file = configs_dir / version_file_name
 
     if not next_release_file.exists():
-        raise errors.NoApprovedChanges()
+        raise errors.NoApprovedChanges(file=next_release_file)
 
     next_release_file.rename(next_version_file)
 
@@ -84,10 +84,10 @@ def create_changelog() -> None:
     config_dir_must_exist()
 
     if next_release_file.exists():
-        raise errors.ApprovedChangesFileExists()
+        raise errors.ApprovedChangesFileExists(file=next_release_file)
 
     if not unreleased_changes_file.exists():
-        raise errors.NoUnreleasedChanges()
+        raise errors.NoUnreleasedChanges(file=unreleased_changes_file)
 
     header = header_file.read_text()
 

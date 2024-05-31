@@ -1,5 +1,5 @@
 import typer
-
+from changy import utils
 from changy import logic
 
 app = typer.Typer()
@@ -7,9 +7,11 @@ app = typer.Typer()
 
 @app.command()
 def create() -> None:
-    logic.create_unreleased()
+    with utils.exit_on_exception():
+        logic.create_unreleased()
 
 
 @app.command()
 def approve() -> None:
-    logic.approve_unreleased()
+    with utils.exit_on_exception():
+        logic.approve_unreleased()
