@@ -37,6 +37,27 @@ def config_dir_must_exist():
         raise errors.ChangesDirDoesNotExist(directory=configs_dir)
 
 
+def load_changes() -> list[Changes]:
+    changes = []
+
+    for file in configs_dir.iterdir():
+        match = CHANGES_FILE_REGEX.match(file.name)
+
+        if not match:
+            continue
+
+        time, version = match.groups()
+        text = file.read_text()
+
+        changes = Changes(time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT), version=version, text=text)
+
+        changes.append(changes)
+
+    changes.sort(key=lambda x: x.time, reverse=True)
+
+    return changes
+
+
 def init() -> None:
 
     if configs_dir.exists():
@@ -66,6 +87,12 @@ def approve_unreleased() -> None:
 def create_version(version: str) -> None:
     config_dir_must_exist()
 
+    changes = load_changes()
+
+    for change in changes:
+        if change.version == version:
+            raise errors.VersionAlreadyExists(file=next_release_file)
+
     time = datetime.datetime.now().strftime(VERSION_DATETIME_FORMAT)
 
     version_file_name = f"{time}_{version}.md"
@@ -91,22 +118,7 @@ def create_changelog() -> None:
 
     header = header_file.read_text()
 
-    releases = []
-
-    for file in configs_dir.iterdir():
-        match = CHANGES_FILE_REGEX.match(file.name)
-
-        if not match:
-            continue
-
-        time, version = match.groups()
-        text = file.read_text()
-
-        changes = Changes(time=datetime.datetime.strptime(time, VERSION_DATETIME_FORMAT), version=version, text=text)
-
-        releases.append(changes)
-
-    releases.sort(key=lambda x: x.time, reverse=True)
+    releases = load_changes()
 
     content = [header]
 
