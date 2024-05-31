@@ -87,7 +87,7 @@ def approve_unreleased() -> None:
     unreleased_changes_file.rename(next_release_file)
 
 
-def create_version(version: str) -> None:
+def create_version(version: str) -> Path:
     config_dir_must_exist()
 
     changes = load_changes()
@@ -108,6 +108,8 @@ def create_version(version: str) -> None:
     next_release_file.rename(next_version_file)
 
     create_unreleased()
+
+    return next_version_file
 
 
 def create_changelog() -> None:

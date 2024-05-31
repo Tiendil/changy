@@ -59,6 +59,7 @@ You may edit `./changes/unreleased.md` any time you want before making an actual
 # This command should be run by the responsible person before release to mark that the changelog has been reviewed by humans and is ready to be released.
 changy unreleased approve
 
+git add -a
 git commit -m "Approve changes for next release"
 ```
 
@@ -73,5 +74,6 @@ changy version create 1.2.3
 # generates changelog
 changy changelog create
 
+git add -a
 git commit -m "Release 1.2.3"
 ```
