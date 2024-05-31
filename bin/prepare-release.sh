@@ -31,7 +31,7 @@ echo "Commit changes"
 
 git add -A
 git commit -m "Release $NEXT_VERSION" -m "$(poetry run changy version show $NEXT_VERSION)"
-# git push
+git push
 
 # echo "Create tag"
 
