@@ -112,6 +112,18 @@ def create_version(version: str) -> Path:
     return next_version_file
 
 
+def show_version_changes(version: str) -> str:
+    config_dir_must_exist()
+
+    changes = load_changes()
+
+    for change in changes:
+        if change.version == version:
+            return change.text.strip()
+
+    raise errors.VersionDoesNotExist(version=version)
+
+
 def create_changelog() -> None:
     config_dir_must_exist()
 
