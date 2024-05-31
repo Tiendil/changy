@@ -27,6 +27,10 @@ No changes.
 
 No changes.
 
+## 0.1.2 on 2024-05-31
+
+- Added Changy steps to prepare-release.sh
+
 ## 0.1.0 on 2024-05-30
 
 Initial implementation.
