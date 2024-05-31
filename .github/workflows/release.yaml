@@ -55,7 +55,7 @@ jobs:
       - name: Prepare release
         run: ./bin/prepare-release.sh ${{ github.event.inputs.bump_version }}
 
-      # - name: Publish package distributions to PyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     packages-dir: ./dist/
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: ./dist/

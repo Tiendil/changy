@@ -33,7 +33,7 @@ git add -A
 git commit -m "Release $NEXT_VERSION" -m "$(poetry run changy version show $NEXT_VERSION)"
 git push
 
-# echo "Create tag"
+echo "Create tag"
 
-# git tag $NEXT_VERSION_TAG
-# git push origin $NEXT_VERSION_TAG
+git tag $NEXT_VERSION_TAG
+git push origin $NEXT_VERSION_TAG
