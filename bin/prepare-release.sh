@@ -30,7 +30,7 @@ poetry build
 echo "Commit changes"
 
 git add -A
-git commit -m `cat $NEXT_VERSION_CHANGES_FILE`
+git commit --file=$NEXT_VERSION_CHANGES_FILE
 git push
 
 echo "Create tag"
