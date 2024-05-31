@@ -1,23 +1,23 @@
 # Changy
 
-Very simple changelog manager with the idea that changelogs are written by humans for humans.
+Very simple changelog manager with the idea that humans write changelogs for humans, not for robots.
 
-Special message formatting (DSLs) to describe changes in commits, tags, etc. are good idea, but not very convinient for development and CI/CD process.
+Special message formatting (DSLs) to describe changes in commits, tags, etc., is a good idea, but it is not always convenient for development and the CI/CD process.
 
-- The person who makes the commit is not always the person who are responsible for writing changelog or making release.
-- The person who makes release also is not always responsible for writing changelog.
-- The time when you want to work on changelog is not always the time when you are making commits or preparing release.
-- Special message formatting is not always convinient for describing changes that will be read by humans.
-- It is difficult to update messages in commit history.
+- The person who commits is not always responsible for writing the changelog or making a release.
+- The person who makes a release is also not always responsible for writing the changelog.
+- The time when you want to work on the changelog is not always the time when you are making commits or preparing a release.
+- Special message formatting is not always convenient for describing changes that humans will read.
+- It is difficult to update messages in the commit history.
 
-I searched for tool that helps to manage changelogs but do not requires unnecessary effort from a developer, but did not find any. Thats how Changy was born.
+I searched for a tool that helps to manage changelogs but does not require unnecessary effort from a developer, but I did not find any that suited me. That's how Changy was born.
 
 Changy is inspired by:
 
 - [Changie](https://github.com/miniscruff/changie)
 - [Towncrier](https://github.com/twisted/towncrier)
 
-But simpler, oriented on editing text files by hand: without cli commands to input changes, without strict messages format, etc.
+But it is simpler and oriented toward editing text files by hand: without cli commands to input changes, without strict message formats, etc.
 
 # Installation
 
@@ -37,14 +37,14 @@ changy help
 
 `CHANGELOG.md` is compiled from parts from `./changes` directory: one file per version.
 
-Besides version files, there are some special files:
+Besides version files, there are some particular files:
 
 - `./changes/header.md` — content that will be placed at the top of the changelog.
 - `./changes/changes_template.md` — template for version file. Changy will copy this file to create new version files.
-- `./changes/unreleased.md` — changes that are not released yet.
-- `./changes/next_release.md` — changes that are approved to the next release (see usage for details).
+- `./changes/unreleased.md` — changes that have not been released yet.
+- `./changes/next_release.md` — changes that are approved for the next release (see usage for details).
 
-You should edit `./changes/unreleased.md` any time you want, before doing actual release. This file has no special syntax, but allows substitution of some variables:
+You may edit `./changes/unreleased.md` any time you want before doing an actual release. This file has no special syntax but allows substitution of some variables:
 
 - `{version_header}` — base header of version (version number + date).
 
@@ -58,18 +58,18 @@ You should edit `./changes/unreleased.md` any time you want, before doing actual
 
 # edit ./changes/unreleased.md
 
-# This command should be run by hand before release to mark that changelog are reviewed by human and ready to be released.
+# This command should be run by the responsible person before release to mark that the changelog has been reviewed by humans and is ready to be released.
 changy unreleased approve
 
 git commit -m "Approve changes for next release"
 
 ##################################
-# Somewhere in you CI/CD pipeline
+# Somewhere in your CI/CD pipeline
 ##################################
 
 # For detailed exaxmple, see ./bin/prepate-release.sh
 
-# creates version file with approved changes and creates new unreleased file
+# Creates version file with approved changes and creates new unreleased file
 changy version create 1.2.3
 
 # generates changelog
