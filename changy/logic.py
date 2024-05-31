@@ -129,10 +129,11 @@ def create_changelog() -> None:
 
     # add unreleased changes
     text = unreleased_changes_file.read_text()
-    unreleased_text = text.format(version_header="Unreleased")
+    unreleased_text = f"## Unreleased\n\n{text.strip()}"
     content.append(unreleased_text)
 
-    content.extend(change.text.format(version_header=change.version_header) for change in releases)
+    for change in releases:
+        content.append(f'## {change.version_header}\n\n{change.text.strip()}')
 
     content = [x.strip() for x in content]
 
