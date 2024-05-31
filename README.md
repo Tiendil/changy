@@ -17,7 +17,7 @@ Changy is inspired by:
 - [Changie](https://github.com/miniscruff/changie)
 - [Towncrier](https://github.com/twisted/towncrier)
 
-But it is simpler and oriented toward editing text files by hand: without cli commands to input changes, without strict message formats, etc.
+However, Changy simplifies the process by focusing on manual text file editing without the need for CLI commands or strict message formats.
 
 # Installation
 
@@ -39,36 +39,34 @@ changy help
 
 Besides version files, there are some particular files:
 
-- `./changes/header.md` — content that will be placed at the top of the changelog.
-- `./changes/changes_template.md` — template for version file. Changy will copy this file to create new version files.
-- `./changes/unreleased.md` — changes that have not been released yet.
-- `./changes/next_release.md` — changes that are approved for the next release (see usage for details).
+- `./changes/header.md` — Content placed at the top of the changelog.
+- `./changes/changes_template.md` — Template for version files. Changy copies this file to create new version files.
+- `./changes/unreleased.md` — Contains changes not yet released.
+- `./changes/next_release.md` — Contains changes approved for the next release.
 
-You may edit `./changes/unreleased.md` any time you want before doing an actual release. This file has no special syntax but allows substitution of some variables:
+You may edit `./changes/unreleased.md` any time you want before making an actual release. This file has no special syntax but allows substitution of some variables:
 
 - `{version_header}` — base header of version (version number + date).
 
 
 # Usage
 
-```bash
-##################################
-# Manual operations before release
-##################################
+## Manual operations before release
 
+```bash
 # edit ./changes/unreleased.md
 
 # This command should be run by the responsible person before release to mark that the changelog has been reviewed by humans and is ready to be released.
 changy unreleased approve
 
 git commit -m "Approve changes for next release"
+```
 
-##################################
-# Somewhere in your CI/CD pipeline
-##################################
+## Somewhere in your CI/CD pipeline
 
-# For detailed exaxmple, see ./bin/prepate-release.sh
+For detailed example, see ./bin/prepate-release.sh
 
+```bash
 # Creates version file with approved changes and creates new unreleased file
 changy version create 1.2.3
 
