@@ -5,6 +5,7 @@ from pathlib import Path
 import pydantic
 
 from changy import constants as c
+from changy import errors
 from changy.settings import settings
 
 VERSION_DATETIME_FORMAT = "%Y-%m-%dT%H-%M-%S"
@@ -31,10 +32,15 @@ class Changes(pydantic.BaseModel):
         return f"{self.version} on {self.time.strftime('%Y-%m-%d')}"
 
 
+def config_dir_must_exist():
+    if not configs_dir.exists():
+        raise errors.ChangesDirDoesNotExist(directory=configs_dir)
+
+
 def init() -> None:
 
     if configs_dir.exists():
-        raise NotImplementedError("already initialized")
+        raise errors.AlreadyInitialized()
 
     configs_dir.mkdir()
     header_file.write_text(c.default_changelog_header)
@@ -44,17 +50,22 @@ def init() -> None:
 
 
 def create_unreleased() -> None:
+    config_dir_must_exist()
     unreleased_changes_file.write_text(c.default_change_file_template)
 
 
 def approve_unreleased() -> None:
+    config_dir_must_exist()
+
     if not unreleased_changes_file.exists():
-        raise NotImplementedError("unreleased.md not found")
+        errors.NoUnreleasedChanges(file=unreleased_changes_file)
 
     unreleased_changes_file.rename(next_release_file)
 
 
 def create_version(version: str) -> None:
+    config_dir_must_exist()
+
     time = datetime.datetime.now().strftime(VERSION_DATETIME_FORMAT)
 
     version_file_name = f"{time}_{version}.md"
@@ -62,7 +73,7 @@ def create_version(version: str) -> None:
     next_version_file = configs_dir / version_file_name
 
     if not next_release_file.exists():
-        raise NotImplementedError("next_release.md not found")
+        raise errors.NoApprovedChanges(file=next_release_file)
 
     next_release_file.rename(next_version_file)
 
@@ -70,9 +81,13 @@ def create_version(version: str) -> None:
 
 
 def create_changelog() -> None:
+    config_dir_must_exist()
 
     if next_release_file.exists():
-        raise NotImplementedError("Changelog is in process of updating, do something with next_release.md first")
+        raise errors.ApprovedChangesFileExists(file=next_release_file)
+
+    if not unreleased_changes_file.exists():
+        raise errors.NoUnreleasedChanges(file=unreleased_changes_file)
 
     header = header_file.read_text()
 
@@ -95,10 +110,10 @@ def create_changelog() -> None:
 
     content = [header]
 
-    if unreleased_changes_file.exists():
-        text = unreleased_changes_file.read_text()
-        unreleased_text = text.format(version_header="Unreleased")
-        content.append(unreleased_text)
+    # add unreleased changes
+    text = unreleased_changes_file.read_text()
+    unreleased_text = text.format(version_header="Unreleased")
+    content.append(unreleased_text)
 
     content.extend(change.text.format(version_header=change.version_header) for change in releases)
 

@@ -1,4 +1,4 @@
-from changy import logic
+from changy import logic, utils
 from changy.cli import changelog, unreleased, version
 from changy.cli.application import app  # noqa: F401
 
@@ -9,7 +9,8 @@ app.add_typer(changelog.app, name="changelog")
 
 @app.command()
 def init() -> None:
-    logic.init()
+    with utils.exit_on_exception():
+        logic.init()
 
 
 app()
