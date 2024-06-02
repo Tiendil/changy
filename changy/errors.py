@@ -29,7 +29,7 @@ class ChangesDirDoesNotExist(ChangyError):
 
 
 class AlreadyInitialized(ChangyError):
-    message = "Already initialized"
+    message = "Already initialized, file {file} already exists"
 
 
 class NoApprovedChanges(ChangyError):

@@ -1,6 +1,7 @@
 import datetime
 import re
 from pathlib import Path
+import warnings
 
 import pydantic
 
@@ -62,11 +63,15 @@ def load_changes() -> list[Changes]:
 
 
 def init() -> None:
-
     if configs_dir.exists():
-        raise errors.AlreadyInitialized()
+        warnings.warn(f"Directory {configs_dir} already exists.")
+    else:
+        configs_dir.mkdir()
 
-    configs_dir.mkdir()
+    for file in (header_file, changes_template_file, unreleased_changes_file):
+        if file.exists():
+            raise errors.AlreadyInitialized(file=file)
+
     header_file.write_text(c.default_changelog_header)
     changes_template_file.write_text(c.default_change_file_template)
 
