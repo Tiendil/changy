@@ -62,11 +62,13 @@ def load_changes() -> list[Changes]:
 
 
 def init() -> None:
+    if not configs_dir.exists():
+        configs_dir.mkdir()
 
-    if configs_dir.exists():
-        raise errors.AlreadyInitialized()
+    for file in (header_file, changes_template_file, unreleased_changes_file):
+        if file.exists():
+            raise errors.AlreadyInitialized(file=file)
 
-    configs_dir.mkdir()
     header_file.write_text(c.default_changelog_header)
     changes_template_file.write_text(c.default_change_file_template)
 
